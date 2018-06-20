@@ -12,11 +12,15 @@ import {
   CellGroup,
   Swipe,
   SwipeItem,
-  Lazyload
+  Lazyload,
+  Field,
+  NavBar
 } from 'vant'
 
 Vue
   .use(Button)
+  .use(Field)
+  .use(NavBar)
   .use(Row)
   .use(Col)
   .use(Cell)
