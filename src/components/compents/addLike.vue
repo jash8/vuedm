@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     addLikes: function() {
-      console.log('sdf')
+      // console.log('sdf')
       this.vBln ? this.likesNum++ : this.likesNum--;
       this.vBln = !this.vBln;      
     }

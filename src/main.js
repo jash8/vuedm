@@ -3,7 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 import {
+  Toast,
   Button,
   Row,
   Col,
@@ -18,6 +20,7 @@ import {
 } from 'vant'
 
 Vue
+  .use(Toast)
   .use(Button)
   .use(Field)
   .use(NavBar)

@@ -8,12 +8,14 @@
       <van-field label="密码" icon="clear" v-model="password" type="password" @click-icon="password=''" placeholder="请输入密码" required></van-field>
     </div>
     <div class="ButtonWrp">
-      <van-button text="注册" type="primary" size="large"></van-button>
+      <van-button text="注册" type="primary" @click="registerUser" size="large"></van-button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import url from "@/url.config.js";
 export default {
   data() {
     return {
@@ -24,18 +26,39 @@ export default {
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    registerUser() {
+      axios
+        .post(url.RegisterUser, {
+          password: this.password,
+          userName: this.username
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            console.log(res.data);
+            this.$toast.success("注册成功！");
+          } else {
+            console.log(res.data);
+            this.$toast.fail(res.data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err.error);
+          this.$toast.fail("操作失败！");
+        });
     }
   }
 };
 </script>
 
 <style scoped>
-.fieldWrp,.ButtonWrp {
+.fieldWrp,
+.ButtonWrp {
   position: relative;
   width: 98%;
   margin: 0.5rem auto;
 }
-.fieldWrp::after{
+.fieldWrp::after {
   content: "";
   display: block;
   height: 0;
@@ -43,7 +66,7 @@ export default {
   position: absolute;
   border-bottom: 1px solid #f7f7f7;
   bottom: 0;
-  right: 0
+  right: 0;
 }
 
 .fieldWrp button {
@@ -51,6 +74,6 @@ export default {
   margin: 0 auto;
 }
 .ButtonWrp {
-  margin-top: 1.5rem
+  margin-top: 1.5rem;
 }
 </style>
