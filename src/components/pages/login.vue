@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar title="用户注册" left-text="返回" left-arrow @click="goBack"/>
+    <van-nav-bar title="用户登录" left-text="返回" left-arrow @click="goBack"/>
     <div class="fieldWrp">
       <van-field label="用户名" icon="clear" v-model="username" type="text" @click-icon="username=''" :error-message="usernameErrMsg" placeholder="请输入用户名" required></van-field>
     </div>
@@ -8,7 +8,7 @@
       <van-field label="密码" icon="clear" v-model="password" type="password" @click-icon="password=''" :error-message="passwordErrMsg" placeholder="请输入密码" required></van-field>
     </div>
     <div class="ButtonWrp">
-      <van-button text="注册" type="primary" :loading="openLoading" @click="registAction" size="large"></van-button>
+      <van-button text="登录" type="primary" :loading="openLoading" @click="loginAction" size="large"></van-button>
     </div>
   </div>
 </template>
@@ -19,8 +19,8 @@ import url from "@/url.config.js";
 export default {
   data() {
     return {
-      password: "",
-      username: "",
+      password: "123456",
+      username: "joker",
       openLoading: false, //注册的loading状态
       usernameErrMsg: "", //用户名错误时出现的提示信息
       passwordErrMsg: "" //密码错误时出现的提示信息
@@ -30,8 +30,8 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    registAction(){
-      this.checkForm() && this.registerUser()
+    loginAction(){
+      this.checkForm() && this.loginUser()
     },
     // 表单验证的方法
     checkForm() {
@@ -42,7 +42,7 @@ export default {
       }else{
         this.usernameErrMsg = "";
       }
-      if (this.password.length < 12) {
+      if (this.password.length < 6) {
         this.passwordErrMsg = "用户名不能小于12位";
         isOk = false;
       }else{
@@ -51,29 +51,13 @@ export default {
 
       return isOk
     },
-    registerUser() {
+    loginUser() {
       this.openLoading = true;
       axios
-        .post(url.RegisterUser, {
+        .post(url.loginUser, {
           password: this.password,
           userName: this.username
         })
-        .then(res => {
-          if (res.data.code == 200) {
-            console.log(res.data);
-            this.openLoading = false;
-            this.$toast.success("注册成功！");
-            this.$router.push("/");
-          } else {
-            console.log(res.data);
-            this.$toast.fail(res.data.message);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          this.openLoading = false;
-          this.$toast.fail("操作失败！");
-        });
     }
   }
 };

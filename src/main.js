@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 
 import {
+  Loading,
   Toast,
   Button,
   Row,
@@ -20,6 +21,7 @@ import {
 } from 'vant'
 
 Vue
+  .use(Loading)
   .use(Toast)
   .use(Button)
   .use(Field)
