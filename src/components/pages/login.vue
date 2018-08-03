@@ -26,38 +26,71 @@ export default {
       passwordErrMsg: "" //密码错误时出现的提示信息
     };
   },
+  created(){
+    if(localStorage.getItem('userInfo')){
+      this.$toast.success('您已经登录过来')
+      this.$router.push('/')
+    }
+  },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
-    loginAction(){
-      this.checkForm() && this.loginUser()
+    loginAction() {
+      this.checkForm() && this.loginUser();
     },
     // 表单验证的方法
     checkForm() {
       let isOk = true;
-      if (this.username.length < 5) {
+      if (this.username.length < 4) {
         this.usernameErrMsg = "用户名不能小于5位";
         isOk = false;
-      }else{
+      } else {
         this.usernameErrMsg = "";
       }
       if (this.password.length < 6) {
-        this.passwordErrMsg = "用户名不能小于12位";
+        this.passwordErrMsg = "用户名不能小于6位";
         isOk = false;
-      }else{
+      } else {
         this.passwordErrMsg = "";
       }
 
-      return isOk
+      return isOk;
     },
     loginUser() {
       this.openLoading = true;
+      let _this = this;
       axios
         .post(url.loginUser, {
           password: this.password,
           userName: this.username
         })
+        .then(res => {
+          if (res.data.code == 200 && res.data.login == true) {
+            this.$toast.success(res.data.message);
+            new Promise((resolve, reject) => {
+              localStorage.setItem("userInfo", _this.username
+              );
+              setTimeout(resolve(), 500);
+            })
+              .then(() => {
+                this.$router.push("/");
+              })
+              .catch(err => {
+                console.log("用户信息保存失败: ", err);
+                this.$toast.fail("用户信息保存失败");
+              });
+          } else {
+            let msg = res.data.message;
+            this.$toast.fail(msg);
+            this.openLoading = false;
+          }
+        })
+        .catch(err => {
+          this.$toast.fail("登录失败");
+          this.openLoading = false;
+          console.log(err);
+        });
     }
   }
 };

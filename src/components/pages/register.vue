@@ -36,14 +36,14 @@ export default {
     // 表单验证的方法
     checkForm() {
       let isOk = true;
-      if (this.username.length < 5) {
-        this.usernameErrMsg = "用户名不能小于5位";
+      if (this.username.length < 4) {
+        this.usernameErrMsg = "用户名不能小于4位";
         isOk = false;
       }else{
         this.usernameErrMsg = "";
       }
-      if (this.password.length < 12) {
-        this.passwordErrMsg = "用户名不能小于12位";
+      if (this.password.length < 6) {
+        this.passwordErrMsg = "用户名不能小于6位";
         isOk = false;
       }else{
         this.passwordErrMsg = "";
@@ -67,6 +67,7 @@ export default {
           } else {
             console.log(res.data);
             this.$toast.fail(res.data.message);
+            this.openLoading = false;
           }
         })
         .catch(err => {
