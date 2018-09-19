@@ -17,11 +17,13 @@ import {
   SwipeItem,
   Lazyload,
   Field,
-  NavBar
+  PullRefresh,
+  NavBar,Tab, Tabs 
 } from 'vant'
 
 Vue
   .use(Loading)
+  .use(PullRefresh )
   .use(Toast)
   .use(Button)
   .use(Field)
@@ -32,6 +34,8 @@ Vue
   .use(CellGroup)
   .use(List)
   .use(Swipe)
+  .use(Tab)
+  .use(Tabs)
   .use(SwipeItem)
   .use(Lazyload)
 

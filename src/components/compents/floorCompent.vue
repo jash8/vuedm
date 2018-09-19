@@ -2,7 +2,10 @@
     <div class="floorWrp">
       <h5 class="floorTit">{{floorTitle}}</h5>
       <div v-for="(item , index) in floorData" :key="index">
-          <img :src="item.image" width="100%" alt="">
+        <router-link :to="'goods/'+item.goodsId">
+            <img :src="item.image" width="100%" alt="">
+        </router-link>
+          
       </div>
   </div>
 </template>

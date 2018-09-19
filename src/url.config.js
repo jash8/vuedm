@@ -4,6 +4,9 @@ const Url ={
   RegisterUser:Base+'/user/register',
   loginUser:Base+'/user/login',
   goodsDetail:Base+'/goods/getDetailGoodsInfo',
+  getCategoryList:Base+ '/goods/getCategoryList',
+  getCategorySubList:Base+ '/goods/getCategorySubList',
+  getGoodsList:Base+ '/goods/getGoodsList',
 }
 
 module.exports=Url
